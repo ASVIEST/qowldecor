@@ -10,6 +10,11 @@ This library, like `libdecor`, therefore implements CSD rendering as a practical
 Because it sucks. In my testing, `libdecor`’s GTK plugin consistently causes multi-second hangs during trivial headerbar interactions. Even merely hovering the close button can block the application long enough for the desktop to report it as unresponsive. This makes the GTK plugin unsuitable as a practical foundation for client-side window decorations. Besides this, libdecor can't provide a native-looking overlay for its primary purpose — GNOME. It doesn't use libadwaita, so it looks not native.
 
 ## Architecture
-Unlike libdecor, this library deliberately avoids a plugin architecture. In practice, that model mostly adds indirection and maintenance cost without yielding meaningful extensibility. Instead, there are currently only two rendering backends (that cover 100% cases): a `wl_shm` fallback and a `Vulkan` using `VK_KHR_external_memory`. It uses `wl_subsurface`, so you don't have to worry about your app being OpenGL and window decorations being rendered via `Vulkan`.
+Unlike libdecor, this library deliberately avoids a plugin architecture. In practice, that model mostly adds indirection and maintenance cost without yielding meaningful extensibility.
+Instead, there are currently only two rendering backends (that cover 100% cases):
+- `wl_shm` fallback for portability
+- `Vulkan` using `VK_KHR_external_memory` for gpu accelerated rendering
+
+It uses `wl_subsurface`, so you don't have to worry about your app being OpenGL and window decorations being rendered via `Vulkan`.
 
 Themes are kept separate from the rendering backend. This avoids the Cartesian product of multiple themes by multiple rendering backends.
